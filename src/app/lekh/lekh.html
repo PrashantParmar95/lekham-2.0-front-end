@@ -1,0 +1,39 @@
+@if (lekh) {
+  <div class="lekh-card">
+    <h2 class="title">{{ lekh.title }}</h2>
+
+    <div class="meta">
+      <span>📝 Created: {{ lekh.created_time | date:'medium' }}</span>
+      @if (lekh.updated_time) {
+        <span>✏️ Updated: {{ lekh.updated_time | date:'medium' }}</span>
+      }
+    </div>
+
+    <div class="content">
+      <h3>Content</h3>
+      <p [innerHTML]="lekh.content.content"></p>
+    </div>
+
+    @if (lekh.comments) {
+      <div class="comments">
+        <h3>💬 Comments</h3>
+        <pre>{{ lekh.comments | json }}</pre>
+      </div>
+    }
+
+    @if (lekh.likes) {
+      <div class="likes">
+        <h3>❤️ Likes</h3>
+        <pre>{{ lekh.likes | json }}</pre>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="loading">
+    @if (!errorMessage) {
+      <p>⏳ Loading lekh...</p>
+    } @else {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </div>
+}

@@ -1,0 +1,58 @@
+<div class="article-page">
+  @if (loading) {
+    <div class="loading">⏳ Loading...</div>
+  }
+
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
+
+  @if (!loading && !error) {
+    <div class="category-header">
+      <h2>{{ category?.name }}</h2>
+      <p>{{ category?.description }}</p>
+    </div>
+
+    <h3 class="section-title">Articles</h3>
+    <ol class="lekh-list">
+      @for (lekh of lekhList; track lekh.id) {
+        <ng-container *ngTemplateOutlet="renderLekh; context: { $implicit: lekh }"></ng-container>
+      }
+    </ol>
+
+
+    <button class="add-btn" (click)="routeAddLekh(category?.id,0)">
+      ➕ Add Article
+    </button>
+  }
+</div>
+
+<!-- Template for a single Lekh -->
+<ng-template #renderLekh let-lekh>
+  <li class="lekh-item" [title]="lekh.title">
+    <div class="lekh-row">
+      @if (lekh.childlekhs?.length) {
+        <button class="toggle-btn" (click)="lekh.expanded = !lekh.expanded">
+          {{ lekh.expanded ? '▼' : '▶' }}
+        </button>
+      } @else {
+        <span class="toggle-placeholder"></span>
+      }
+
+      <a [routerLink]="['/lekh', lekh.id]">
+        <span class="title">{{ lekh.title }}</span>
+        <span class="meta">{{ lekh.createdTime | date:'medium' }}</span>
+      </a>
+
+      <button class="icon-btn" (click)="routeAddLekh(category?.id,lekh.id)">➕</button>
+    </div>
+
+    @if (lekh.childlekhs?.length && lekh.expanded) {
+      <ol class="child-lekh-list">
+        @for (child of lekh.childlekhs; track child.id) {
+          <ng-container *ngTemplateOutlet="renderLekh; context: { $implicit: child }"></ng-container>
+        }
+      </ol>
+    }
+  </li>
+</ng-template>

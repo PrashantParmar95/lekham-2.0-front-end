@@ -1,0 +1,25 @@
+<div class="chat-container">
+  <div class="chat-box" id="chat-box">
+    <div
+      *ngFor="let message of messages"
+      [ngClass]="{ 'user-msg': message.isUserMessage, 'ai-msg': !message.isUserMessage }"
+      class="chat-bubble">
+      <div [innerHTML]="message.msg"></div>
+    </div>
+    <div *ngIf="data_loading" class="chat-bubble ai-msg loading-spinner">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="userInput"
+      (keydown.enter)="sendMessage()"
+      placeholder="Type your message"
+    />
+    <button (click)="sendMessage()" [disabled]="userInput == null || userInput == ''" >Send</button>
+
+  </div>
+
+</div>

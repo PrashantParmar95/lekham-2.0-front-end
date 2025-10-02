@@ -1,0 +1,52 @@
+
+<div class="form-container">
+  <h2>Create Lekh</h2>
+  <form [formGroup]="lekhForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" formControlName="title" placeholder="Enter title">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Access</label>
+        <select formControlName="access">
+          <option value="PUBLIC" active >Public</option>
+          <option value="PROTECTED">Protected</option>
+          <option value="PRIVATE">Private</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select formControlName="category" [attr.disabled]="categoryMatch ? true : null">
+        <option value="0">Select</option>
+          @for (category of categoryList; track category.id) {
+            <option [value]="category.id">{{ category.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+      <app-content-writer formControlName="content"></app-content-writer>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Background Color</label>
+        <input type="color" formControlName="bgc">
+      </div>
+
+      <div class="form-group">
+        <label>Text Color</label>
+        <input type="color" formControlName="txtc">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" [disabled]="lekhForm.invalid" >Submit</button>
+    </div>
+  </form>
+</div>
+
+{{this.lekhForm.value | json }}
+

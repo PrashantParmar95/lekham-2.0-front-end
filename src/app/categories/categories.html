@@ -1,0 +1,35 @@
+@if (categories.length > 0) {
+  <div class="categories-container">
+    @for (cat of categories; track cat.id) {
+      <div class="category-card">
+        <h3 class="category-title">{{ cat.name }}</h3>
+        <p class="category-description">{{ cat.description }}</p>
+
+        <div class="meta">
+          <span>📅 {{ cat.createdDate | date:'mediumDate' }}</span>
+        </div>
+
+        <!-- Navigate to category-with-lekh/:id -->
+        <button class="view-btn" [routerLink]="['/category-with-lekh', cat.id]">
+          Open
+        </button>
+      </div>
+    }
+
+    <!-- Extra card to add a new category -->
+    <div class="category-card add-card" (click)="addCategory()">
+      <div class="add-content">
+        <span class="plus">+</span>
+        <p>Add Category</p>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="loading">
+    @if (!errorMessage) {
+      <p>⏳ Loading categories...</p>
+    } @else {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </div>
+}

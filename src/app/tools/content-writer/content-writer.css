@@ -1,0 +1,47 @@
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #ddd;
+}
+
+.toolbar button {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toolbar button:hover {
+  background-color: #eee;
+}
+
+.toolbar button:focus {
+  outline: none;
+  background-color: #ddd;
+}
+
+.hidden-color-input {
+  display: none;
+}
+
+.editor-container {
+  min-height: 300px;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+

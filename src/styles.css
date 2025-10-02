@@ -1,0 +1,15 @@
+.highlight {
+  background-color: yellow !important;
+}
+
+.danger {
+  background-color: #f1091e !important; /* Light red */
+}
+
+.warning {
+  background-color: #f8c6ce !important; /* Light yellow */
+}
+
+.info {
+  background-color: #9cc7f4 !important; /* Sky blue */
+}

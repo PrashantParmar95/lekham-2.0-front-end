@@ -1,0 +1,22 @@
+<div class="toolbar">
+  <button (click)="makeBold()" title="Bold">B</button>
+  <button (click)="makeItalic()" title="Italic">I</button>
+  <button (click)="applyHighlight('highlight')" title="Highlight">HL</button>
+  <button (click)="applyHighlight('danger')" title="Danger">D</button>
+  <button (click)="applyHighlight('warning')" title="Warning">W</button>
+  <button (click)="applyHighlight('info')" title="Info">I⧉</button>
+  <button (click)="makeHeading()" title="Heading">H</button>
+
+  <button (click)="openColorPicker()" title="Text Color">🎨</button>
+  <input #colorInput type="color" class="hidden-color-input" (input)="changeTextColor($event)" />
+</div>
+
+<!-- Form-aware editor -->
+<div
+  #editorRef
+  contenteditable="true"
+  class="editor-container"
+  (input)="onInput()"
+>
+  I am Prashant
+</div>

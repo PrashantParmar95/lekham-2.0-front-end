@@ -1,0 +1,50 @@
+<div class="main-screen">
+  <div class="welcome-text">
+    <h1>Welcome to Lekham</h1>
+    <p>Connect with your thoughts. Manage your knowledge and memories effortlessly.</p>
+  </div>
+
+  <!-- Login card -->
+  <div class="login-container">
+    <h2 class="title">Login</h2>
+
+    <!-- Toggle Switch -->
+    <div class="toggle-switch">
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="useOtp">
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">{{ useOtp ? 'OTP Login' : 'Password Login' }}</span>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group" *ngIf="!useOtp">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="Enter password">
+      </div>
+
+      <button type="submit" class="btn">
+        {{ useOtp ? 'Send OTP' : 'Login' }}
+      </button>
+    </form>
+
+    <!-- OTP Form -->
+    <form [formGroup]="otpForm" *ngIf="showOtpInput" (ngSubmit)="verifyOtp()">
+      <div class="input-group">
+        <label>OTP</label>
+        <input type="text" formControlName="otp" maxlength="6" placeholder="Enter OTP" required>
+      </div>
+      <button type="submit" class="btn">Verify OTP</button>
+    </form>
+
+    <!-- Messages -->
+    <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+  </div>
+</div>
