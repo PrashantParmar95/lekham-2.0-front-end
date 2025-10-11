@@ -1,22 +1,44 @@
-<div class="toolbar">
-  <button (click)="makeBold()" title="Bold">B</button>
-  <button (click)="makeItalic()" title="Italic">I</button>
-  <button (click)="applyHighlight('highlight')" title="Highlight">HL</button>
-  <button (click)="applyHighlight('danger')" title="Danger">D</button>
-  <button (click)="applyHighlight('warning')" title="Warning">W</button>
-  <button (click)="applyHighlight('info')" title="Info">I⧉</button>
-  <button (click)="makeHeading()" title="Heading">H</button>
+<!--<button mat-button (click)="openChat()">Open Chat</button>-->
 
-  <button (click)="openColorPicker()" title="Text Color">🎨</button>
-  <input #colorInput type="color" class="hidden-color-input" (input)="changeTextColor($event)" />
+<div class="toolbar" role="toolbar" aria-label="Formatting toolbar">
+  <button type="button" (click)="undo()" title="Undo" aria-label="Undo">↶</button>
+  <button type="button" (click)="redo()" title="Redo" aria-label="Redo">↷</button>
+
+  <button type="button" (click)="toggleBold()" [class.active]="isBold" title="Bold (Ctrl/Cmd + B)" aria-pressed="{{isBold}}">B</button>
+  <button type="button" (click)="toggleItalic()" [class.active]="isItalic" title="Italic (Ctrl/Cmd + I)" aria-pressed="{{isItalic}}">I</button>
+
+  <button type="button" (click)="toggleHeading()" [class.active]="isHeading" title="Toggle Heading">H</button>
+
+  <button type="button" (click)="toggleOrderedList()" [class.active]="isOrdered" title="Ordered List">1.</button>
+  <button type="button" (click)="toggleUnorderedList()" [class.active]="isUnordered" title="Bulleted List">•</button>
+
+  <button type="button" (click)="applyHighlight('highlight')" title="Highlight">HL</button>
+  <button type="button" (click)="applyHighlight('danger')" title="Danger">D</button>
+  <button type="button" (click)="applyHighlight('warning')" title="Warning">W</button>
+  <button type="button" (click)="applyHighlight('info')" title="Info">i</button>
+
+  <button type="button" (click)="insertLink()" title="Insert Link">🔗</button>
+
+  <button type="button" (click)="openColorPicker()" title="Text Color">🎨</button>
+  <input #colorInput type="color" class="hidden-color-input" (input)="changeTextColor($event)" aria-hidden="true" />
+
+  <button type="button" (click)="removeFormatting()" title="Remove Formatting">Tx</button>
+  <button type="button" (click)="chat.open()" title="AI Support">ai</button>
 </div>
 
-<!-- Form-aware editor -->
 <div
   #editorRef
   contenteditable="true"
   class="editor-container"
   (input)="onInput()"
+  (blur)="onTouched()"
+  role="textbox"
+  aria-multiline="true"
+  tabindex="0"
 >
-  I am Prashant
+  <!-- Placeholder content if empty -->
+  <div class="placeholder">Start writing here...</div>
 </div>
+
+
+<app-chat #chat></app-chat>

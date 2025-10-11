@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import {HttpService} from './http-service';
+import {API_ENDPOINTS} from '../constants/endpoints';
 
 interface LoginRequest {
   email: string;
@@ -30,19 +32,17 @@ interface LoginResponse {
 })
 export class AuthService {
 
-  private baseUrl = 'http://lekham-plus/auth';
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private httpService: HttpService) {}
 
   login(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, request)
+    return this.http.post<LoginResponse>(API_ENDPOINTS.AUTH.LOGIN, request)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   verifyOtp(email: string, otp: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login-otp`, { email, otp })
+    return this.http.post<LoginResponse>(API_ENDPOINTS.AUTH.LOGIN_OTP, { email, otp })
       .pipe(
         catchError(this.handleError)
       );
@@ -55,4 +55,13 @@ export class AuthService {
     }
     return throwError(() => new Error(errorMsg));
   }
+
+
+  refreshToken(): Observable<LoginResponse> {
+    return this.httpService.postSecured<LoginResponse>(API_ENDPOINTS.AUTH.REFRESH,null)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 }

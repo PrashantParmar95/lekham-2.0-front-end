@@ -1,52 +1,78 @@
-
 <div class="form-container">
-  <h2>Create Lekh</h2>
+  <h2>✍️ Create Lekh</h2>
+
   <form [formGroup]="lekhForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
     <div class="form-row">
       <div class="form-group">
-        <label>Title</label>
-        <input type="text" formControlName="title" placeholder="Enter title">
+        <label>Title <span class="required">*</span></label>
+        <input type="text" formControlName="title" placeholder="Enter title" />
+        @if (lekhForm.controls['title'].invalid && lekhForm.controls['title'].touched) {
+          <small class="error">Title is required</small>
+        }
       </div>
     </div>
+
+    <!-- Access + Category -->
     <div class="form-row">
       <div class="form-group">
         <label>Access</label>
         <select formControlName="access">
-          <option value="PUBLIC" active >Public</option>
-          <option value="PROTECTED">Protected</option>
-          <option value="PRIVATE">Private</option>
+          <option value="PUBLIC">🌍 Public</option>
+          <option value="PROTECTED">🔒 Protected</option>
+          <option value="PRIVATE">🙈 Private</option>
         </select>
       </div>
+
       <div class="form-group">
         <label>Category</label>
-        <select formControlName="category" [attr.disabled]="categoryMatch ? true : null">
-        <option value="0">Select</option>
+        <select formControlName="category" [disabled]="categoryMatch">
+          <option value="0">Select</option>
           @for (category of categoryList; track category.id) {
             <option [value]="category.id">{{ category.name }}</option>
           }
         </select>
+        @if (lekhForm.controls['category'].invalid && lekhForm.controls['category'].touched) {
+          <small class="error">Category is required</small>
+        }
       </div>
     </div>
+
+    <!-- Content -->
     <div class="form-group">
-      <label>Content</label>
+      <label>Content <span class="required">*</span></label>
       <app-content-writer formControlName="content"></app-content-writer>
+      @if (lekhForm.controls['content'].invalid && lekhForm.controls['content'].touched) {
+        <small class="error">Content is required</small>
+      }
     </div>
+
+    <!-- Colors -->
     <div class="form-row">
       <div class="form-group">
         <label>Background Color</label>
-        <input type="color" formControlName="bgc">
+        <input type="color" formControlName="bgc" />
       </div>
-
       <div class="form-group">
         <label>Text Color</label>
-        <input type="color" formControlName="txtc">
+        <input type="color" formControlName="txtc" />
       </div>
     </div>
+
+    <!-- Buttons -->
     <div class="form-actions">
-      <button type="submit" [disabled]="lekhForm.invalid" >Submit</button>
+      <button type="submit" [disabled]="lekhForm.invalid" class="btn-primary">
+        🚀 Submit
+      </button>
+      <button type="button" (click)="onReset()" class="btn-secondary">
+        🔄 Reset
+      </button>
     </div>
   </form>
 </div>
 
-{{this.lekhForm.value | json }}
-
+<!-- Live Preview -->
+<div class="preview" [style.background]="lekhForm.value.bgc" [style.color]="lekhForm.value.txtc">
+  <h3>{{ lekhForm.value.title || "Preview Title" }}</h3>
+  <p>{{ lekhForm.value.content || "Your content preview will appear here..." }}</p>
+</div>

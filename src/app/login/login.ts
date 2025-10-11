@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AuthService} from '../services/auth';
+import {AuthService} from '../services/auth';
 import {NgIf} from '@angular/common';
 import {LoaderService} from '../services/loader';
 import {Router} from '@angular/router';
@@ -15,12 +15,13 @@ import {Router} from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   otpForm: FormGroup;
-  useOtp: boolean = true;       // toggle between password/OTP login
+  useOtp: boolean = false;       // toggle between password/OTP login
   showOtpInput: boolean = false; // show OTP input page
   errorMessage: string = '';
   successMessage: string = '';
+  private token: string | null | undefined;
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private loader: LoaderService,private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private loader: LoaderService, private router: Router) {
     this.loginForm = this.fb.group({
       email: [''],
       password: ['']
@@ -29,6 +30,8 @@ export class LoginComponent {
     this.otpForm = this.fb.group({
       otp: ['']
     });
+
+    this.validatetoken();
   }
 
   toggleLoginMode() {
@@ -50,7 +53,7 @@ export class LoginComponent {
     this.loader.show();
     if (this.useOtp) {
 
-      this.authService.login({ email, password: '', otp_login: true }).subscribe({
+      this.authService.login({email, password: '', otp_login: true}).subscribe({
         next: (res) => {
           this.loader.hide();
           if (res.success) {
@@ -59,7 +62,7 @@ export class LoginComponent {
             this.errorMessage = res.error || 'Invalid login';
           }
         },
-        error: (err: any) =>{
+        error: (err: any) => {
           this.loader.hide();
           this.errorMessage = err.message
         }
@@ -67,7 +70,7 @@ export class LoginComponent {
       });
     } else {
       // Password login
-      this.authService.login({ email, password, otp_login: false }).subscribe({
+      this.authService.login({email, password, otp_login: false}).subscribe({
         next: (res) => {
           this.loader.hide();
           if (res.success) {
@@ -78,8 +81,7 @@ export class LoginComponent {
             this.errorMessage = res.error || 'Invalid login';
           }
         },
-        error: (err: any) =>
-        {
+        error: (err: any) => {
           this.loader.hide();
           this.errorMessage = err.message
         }
@@ -90,7 +92,7 @@ export class LoginComponent {
   verifyOtp() {
     const otp = this.otpForm.value.otp;
     const username = this.loginForm.value.email;
-this.loader.show();
+    this.loader.show();
     this.authService.verifyOtp(username, otp).subscribe({
       next: (res) => {
         this.loader.hide();
@@ -104,8 +106,30 @@ this.loader.show();
         }
       },
       error: (err: any) => {
-        this.loader.show();
+        this.loader.hide();
         this.errorMessage = err.message
+      }
+    });
+  }
+
+
+  validatetoken(){
+    this.loader.show();
+    this.authService.refreshToken().subscribe({
+      next: (res) => {
+        this.loader.hide();
+        if (res.success) {
+          this.router.navigate(['/categories']);
+          this.successMessage = `Welcome, ${res.data?.user.username}`;
+          this.errorMessage = '';
+          localStorage.setItem('token', res.data?.token || '');
+        } else {
+          this.errorMessage = res.error || 'Invalid Token';
+        }
+      },
+      error: (err: any) => {
+        this.loader.hide();
+        //this.errorMessage = err.message
       }
     });
   }

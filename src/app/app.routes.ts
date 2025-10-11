@@ -5,6 +5,7 @@ import {AddLekh} from './add-lekh/add-lekh';
 import {Lekh} from './lekh/lekh';
 import {Categories} from './categories/categories';
 import {CategoryWithLekh} from './category-with-lekh/category-with-lekh';
+import {Chat} from './chat/chat';
 
 export const routes: Routes = [
   {
@@ -34,5 +35,9 @@ export const routes: Routes = [
 },{
     path: 'category-with-lekh',
     component: Categories
+  },
+  {
+    path: 'chat',
+    component: Chat
   }
 ];

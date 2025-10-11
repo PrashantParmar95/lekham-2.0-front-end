@@ -1,25 +1,44 @@
-<div class="chat-container">
-  <div class="chat-box" id="chat-box">
-    <div
-      *ngFor="let message of messages"
-      [ngClass]="{ 'user-msg': message.isUserMessage, 'ai-msg': !message.isUserMessage }"
-      class="chat-bubble">
-      <div [innerHTML]="message.msg"></div>
+<div class="chat-overlay" *ngIf="isOpen" (click)="closePopup($event)">
+  <div class="chat-popup" cdkDrag cdkDragRootElement=".chat-overlay" cdkDragHandle>
+
+    <!-- Header -->
+    <div class="chat-header" cdkDragHandle>
+      <h3>AI Support</h3>
+      <button class="close-btn" (click)="close()">×</button>
     </div>
-    <div *ngIf="data_loading" class="chat-bubble ai-msg loading-spinner">
-      <div class="spinner"></div>
+
+    <!-- Messages -->
+    <div class="chat-box" id="chat-box">
+      <div
+        *ngFor="let message of messages; let i = index"
+        [ngClass]="{ 'user-msg': message.isUserMessage, 'ai-msg': !message.isUserMessage }"
+        class="chat-bubble"
+      >
+        <div class="bubble-content" [innerHTML]="message.msg"></div>
+
+        <!-- Actions: Copy + Resend -->
+        <div class="bubble-actions">
+          <button (click)="copyMessage(message.msg, i)">📋</button>
+          <button *ngIf="message.showResend" (click)="resendMessage(message.msg)">🔄 Send Again</button>
+        </div>
+      </div>
+
+      <div *ngIf="data_loading" class="chat-bubble ai-msg loading">
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input">
+      <input
+        type="text"
+        [(ngModel)]="userInput"
+        (keydown.enter)="handleEnter($event)"
+        placeholder="Type your question..."
+      />
+      <button (click)="sendMessage()" [disabled]="!userInput">Send</button>
     </div>
   </div>
-
-  <div class="chat-input">
-    <input
-      type="text"
-      [(ngModel)]="userInput"
-      (keydown.enter)="sendMessage()"
-      placeholder="Type your message"
-    />
-    <button (click)="sendMessage()" [disabled]="userInput == null || userInput == ''" >Send</button>
-
-  </div>
-
 </div>

@@ -1,6 +1,6 @@
 <nav class="navbar">
   <!-- Logo / Website name -->
-  <div class="logo">
+  <div class="logo" [routerLink]="['categories']">
     {{ websiteName }}
   </div>
 
@@ -36,7 +36,10 @@
       <p class="user-name">{{ user().name }}</p>
       <p class="user-email">{{ user().email }}</p>
       <hr />
-      <button>Logout</button>
+      <button (click)="logout()" >Logout</button>
     </div>
   </div>
 </nav>
+
+
+

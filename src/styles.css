@@ -1,15 +1,20 @@
-.highlight {
-  background-color: yellow !important;
-}
+/*.highlight {*/
+/*  background-color: yellow !important;*/
+/*}*/
 
-.danger {
-  background-color: #f1091e !important; /* Light red */
-}
+/*.danger {*/
+/*  background-color: #f1091e !important; !* Light red *!*/
+/*}*/
 
-.warning {
-  background-color: #f8c6ce !important; /* Light yellow */
-}
+/*.warning {*/
+/*  background-color: #f8c6ce !important; !* Light yellow *!*/
+/*}*/
 
-.info {
-  background-color: #9cc7f4 !important; /* Sky blue */
-}
+/*.info {*/
+/*  background-color: #9cc7f4 !important; !* Sky blue *!*/
+/*}*/
+
+/*html, body { height: 100%; }*/
+/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+
+

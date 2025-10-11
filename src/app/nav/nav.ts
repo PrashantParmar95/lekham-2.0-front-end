@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {HttpService} from '../services/http-service';
+import {API_ENDPOINTS} from '../constants/endpoints';
 
 interface NavItem {
   label: string;
@@ -24,6 +26,8 @@ interface User {
 })
 export class NavComponent {
   websiteName = 'Lekham+';
+
+  constructor(private httpService: HttpService) { }
 
   navItems = signal<NavItem[]>([
     {
@@ -52,9 +56,14 @@ export class NavComponent {
     email: 'prashant@example.com',
     avatar: 'https://i.pravatar.cc/40' // sample avatar
   });
-
   showUserMenu = signal(false);
   toggleUserMenu() {
     this.showUserMenu.update(v => !v);
+  }
+  logout() {
+    let flag = confirm("are you sure?");
+    if (flag) {
+      this.httpService.postSecured(API_ENDPOINTS.AUTH.LOGOUT,null)
+    }
   }
 }

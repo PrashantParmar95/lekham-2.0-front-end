@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 import { HttpService} from '../services/http-service';
 import { LoaderService } from '../services/loader';
+import {API_ENDPOINTS} from '../constants/endpoints';
 
 @Component({
   selector: 'app-category-with-lekh',
@@ -35,7 +36,7 @@ export class CategoryWithLekh implements OnInit {
 
 
   fetchCategoryWithLekhs(categoryId: number) {
-    this.http.getSecured<any>(`lekh/list/${categoryId}`).subscribe({
+    this.http.getSecured<any>(API_ENDPOINTS.LEKH.LIST_LEKH+`/${categoryId}`).subscribe({
       next: (res) => {
         this.category = res.data.category;
         this.lekhList = res.data.lekhList;
