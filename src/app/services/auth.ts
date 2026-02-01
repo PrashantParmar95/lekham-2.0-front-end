@@ -64,4 +64,12 @@ export class AuthService {
       );
   }
 
+
+  register(request: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(API_ENDPOINTS.USER.REGISTER, request)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 }

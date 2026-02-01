@@ -46,5 +46,9 @@
     <!-- Messages -->
     <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="footer-text">
+      Don't have an account?
+      <a (click)="goToRegister()">Register here</a>
+    </div>
   </div>
 </div>

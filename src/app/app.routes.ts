@@ -6,6 +6,7 @@ import {Lekh} from './lekh/lekh';
 import {Categories} from './categories/categories';
 import {CategoryWithLekh} from './category-with-lekh/category-with-lekh';
 import {Chat} from './chat/chat';
+import {RegisterComponent} from './register/register';
 
 export const routes: Routes = [
   {
@@ -39,5 +40,8 @@ export const routes: Routes = [
   {
     path: 'chat',
     component: Chat
+  },{
+    path: 'register',
+    component: RegisterComponent
   }
 ];

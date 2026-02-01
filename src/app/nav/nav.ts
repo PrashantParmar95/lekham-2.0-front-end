@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {HttpService} from '../services/http-service';
 import {API_ENDPOINTS} from '../constants/endpoints';
 
@@ -27,7 +27,7 @@ interface User {
 export class NavComponent {
   websiteName = 'Lekham+';
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService,private router: Router) { }
 
   navItems = signal<NavItem[]>([
     {
@@ -61,9 +61,19 @@ export class NavComponent {
     this.showUserMenu.update(v => !v);
   }
   logout() {
-    let flag = confirm("are you sure?");
+    const flag = confirm("Are you sure?");
     if (flag) {
-      this.httpService.postSecured(API_ENDPOINTS.AUTH.LOGOUT,null)
+      this.httpService.postSecured(API_ENDPOINTS.AUTH.LOGOUT, {})
+        .subscribe({
+          next: (res) => {
+            console.log("Logout successful:", res);
+           localStorage.removeItem('token');
+            this.router.navigate(['/login']);
+          },
+          error: (err) => {
+            console.error("Logout failed:", err);
+          }
+        });
     }
   }
 }

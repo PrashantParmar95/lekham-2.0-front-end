@@ -1,20 +1,17 @@
-/*.highlight {*/
-/*  background-color: yellow !important;*/
-/*}*/
+.footer-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #7f8c8d;
+}
 
-/*.danger {*/
-/*  background-color: #f1091e !important; !* Light red *!*/
-/*}*/
+.footer-text a {
+  color: #1abc9c;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
 
-/*.warning {*/
-/*  background-color: #f8c6ce !important; !* Light yellow *!*/
-/*}*/
-
-/*.info {*/
-/*  background-color: #9cc7f4 !important; !* Sky blue *!*/
-/*}*/
-
-/*html, body { height: 100%; }*/
-/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
-
-
+.footer-text a:hover {
+  text-decoration: underline;
+}

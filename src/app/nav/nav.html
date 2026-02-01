@@ -1,35 +1,31 @@
 <nav class="navbar">
-  <!-- Logo / Website name -->
   <div class="logo" [routerLink]="['categories']">
     {{ websiteName }}
   </div>
 
-  <!-- Navigation items -->
-  <ul class="nav-links">
-    @for (item of navItems(); track item.label) {
-      <li class="nav-item">
-        <a *ngIf="!item.children" [routerLink]="item.route">
-          <span class="icon">{{ item.icon }}</span> {{ item.label }}
-        </a>
+<!--  <ul class="nav-links">-->
+<!--    @for (item of navItems(); track item.label) {-->
+<!--      <li class="nav-item">-->
+<!--        <a *ngIf="!item.children" [routerLink]="item.route">-->
+<!--          <span class="icon">{{ item.icon }}</span> {{ item.label }}-->
+<!--        </a>-->
 
-        <!-- Dropdown if children exist -->
-        <div class="dropdown" *ngIf="item.children">
-          <span class="icon">{{ item.icon }}</span> {{ item.label }} ⌄
-          <ul class="dropdown-menu">
-            @for (child of item.children; track child.label) {
-              <li>
-                <a [routerLink]="child.route">
-                  <span class="icon">{{ child.icon }}</span> {{ child.label }}
-                </a>
-              </li>
-            }
-          </ul>
-        </div>
-      </li>
-    }
-  </ul>
+<!--        <div class="dropdown" *ngIf="item.children">-->
+<!--          <span class="icon">{{ item.icon }}</span> {{ item.label }} ⌄-->
+<!--          <ul class="dropdown-menu">-->
+<!--            @for (child of item.children; track child.label) {-->
+<!--              <li>-->
+<!--                <a [routerLink]="child.route">-->
+<!--                  <span class="icon">{{ child.icon}}</span> {{ child.label }}-->
+<!--                </a>-->
+<!--              </li>-->
+<!--            }-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--    }-->
+<!--  </ul>-->
 
-  <!-- User Profile -->
   <div class="user-profile" (click)="toggleUserMenu()">
     <img [src]="user().avatar" alt="avatar" class="avatar" />
     <div class="user-popup" *ngIf="showUserMenu()">

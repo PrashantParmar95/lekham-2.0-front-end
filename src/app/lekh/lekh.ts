@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LekhResponse } from './lekh.model';
 import { HttpService} from '../services/http-service';
 import {ActivatedRoute} from '@angular/router';
+import {API_ENDPOINTS} from '../constants/endpoints';
 
 @Component({
   selector: 'app-lekh',
@@ -20,7 +21,7 @@ export class Lekh implements OnInit {
   ngOnInit(): void {
     const lekhId = this.route.snapshot.paramMap.get('id');
 
-    this.httpService.getSecured<LekhResponse>(`lekh/${lekhId}`).subscribe({
+    this.httpService.getSecured<LekhResponse>(API_ENDPOINTS.LEKH.MAIN+`/${lekhId}`).subscribe({
       next: (res) => {
         if (res.success) {
           this.lekh = res.data;

@@ -35,11 +35,26 @@ export class HttpService {
     });
   }
 
-  postSecured<T = any>(url: string, data: any): Observable<T> {
-    return this.http.post<T>(url, data, {
-      headers: this.getAuthHeaders(),
+  // postSecured<T = any>(url: string, data: any): Observable<T> {
+  //   console.log(url+" : "+JSON.stringify(this.getAuthHeaders()));
+  //   return this.http.post<T>(url, data, {
+  //     headers: this.getAuthHeaders(),
+  //   });
+  // }
+
+  postSecured<T = any>(url: string, data?: any): Observable<T> {
+    const token = localStorage.getItem('token');
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${token ?? ''}`
     });
+
+    // Only include Content-Type if there's an actual body
+    if (data) {
+      headers = headers.set('Content-Type', 'application/json');
+    }
+    return this.http.post<T>(url, data ?? {}, { headers });
   }
+
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
