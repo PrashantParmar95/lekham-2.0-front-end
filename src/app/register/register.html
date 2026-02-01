@@ -1,0 +1,39 @@
+<div class="main-screen">
+  <div class="login-container">
+    <h2 class="title">Register</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" formControlName="username" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="text" formControlName="phoneNumber" placeholder="Enter phone number">
+      </div>
+
+      <button type="submit" class="btn">Register</button>
+    </form>
+
+    <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <div class="footer-text">
+      Already have an account?
+      <a (click)="goToLogin()">Login here</a>
+    </div>
+  </div>
+
+  {{registerForm.value | json}}
+</div>
